@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { validateEmailAndPassword } from "../utils/validate";
 
 const LoginForm = ({ type = "sigin" }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    username: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState(null);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleAuth = (e) => {
+    e.preventDefault();
+    
+    try {
+      const validationResult = validateEmailAndPassword(formData);
+      if (!validationResult.valid)  setErrors(validationResult.errors);
+    } catch (error) {
+      setErrors(error.message);
+    }
   };
 
   return (
@@ -22,21 +41,25 @@ const LoginForm = ({ type = "sigin" }) => {
         <form className="mt-8 space-y-6" action="#" method="POST">
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
-           {type=="signin"? null :(
-             <div>
-             <label htmlFor="email-address" className="sr-only">
-               Username
-             </label>
-             <input
-               id="Username"
-               name="username"
-               type="text"
-               required
-               className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
-               placeholder="UserName"
-             />
-           </div>
-           )}
+            {type == "signin" ? null : (
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Username
+                </label>
+                <input
+                  id="Username"
+                  value={formData.username}
+                  onChange={(e) =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
+                  name="username"
+                  type="text"
+                  required
+                  className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
+                  placeholder="UserName"
+                />
+              </div>
+            )}
 
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -48,7 +71,11 @@ const LoginForm = ({ type = "sigin" }) => {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4  "
                 placeholder="Email address"
               />
             </div>
@@ -60,6 +87,10 @@ const LoginForm = ({ type = "sigin" }) => {
               <input
                 id="password"
                 name="password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
@@ -75,6 +106,11 @@ const LoginForm = ({ type = "sigin" }) => {
               </button>
             </div>
           </div>
+
+          {/* Error Handling */}
+          {errors && errors.length > 0 && (
+            <div className="text-red-500">{errors[0].message}</div>
+          )}
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -104,6 +140,7 @@ const LoginForm = ({ type = "sigin" }) => {
 
           <div>
             <button
+              onClick={handleAuth}
               type="submit"
               className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md group hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
@@ -112,18 +149,22 @@ const LoginForm = ({ type = "sigin" }) => {
           </div>
         </form>
         <div className="text-sm text-center text-gray-400">
-         {type=="signin"?( 
-          <div> New to Netflix?{" "}
-          <Link to="/signup" className="text-red-600 hover:text-red-500">
-            Sign up now
-          </Link>
-          </div>
-          ):(
-            <div> Already Registered?{" "}
-          <Link to="/" className="text-red-600 hover:text-red-500">
-            Login now
-          </Link>
-          </div>
+          {type == "signin" ? (
+            <div>
+              {" "}
+              New to Netflix?{" "}
+              <Link to="/signup" className="text-red-600 hover:text-red-500">
+                Sign up now
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {" "}
+              Already Registered?{" "}
+              <Link to="/" className="text-red-600 hover:text-red-500">
+                Login now
+              </Link>
+            </div>
           )}
         </div>
       </div>

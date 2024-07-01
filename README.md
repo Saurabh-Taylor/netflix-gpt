@@ -1,6 +1,10 @@
 # Netflix GPT
 - vite
 - configured Tailwind css
+- Routing of App 
+- Login Form
+- Signup Form
+- Form Validation
 
 # Features
 
