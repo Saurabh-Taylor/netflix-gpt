@@ -6,6 +6,14 @@
 - Signup Form
 - Form Validation
 
+# Tech Stack
+- React + Vite
+- Tailwind CSS
+- Zod (validation library)
+- React Router
+- Firebase
+- Deploying (Firebase)
+
 # Features
 
 - Login/Signup
@@ -19,5 +27,6 @@
 - NetflixGpt
     - Search Bar
     - Movie Suggestions
+
     
 
