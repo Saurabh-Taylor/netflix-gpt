@@ -13,6 +13,7 @@
 - React Router
 - Firebase
 - Deploying (Firebase)
+- Redux-Toolkit
 
 # Features
 

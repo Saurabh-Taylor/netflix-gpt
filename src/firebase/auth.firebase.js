@@ -1,8 +1,10 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword , onAuthStateChanged } from "firebase/auth";
 
 export class FirebaseAuth{
-    auth = getAuth() 
-    
+    auth 
+    constructor(){
+        this.auth = getAuth()
+    }
 
     async createUser({email , password}){
        try {
@@ -10,12 +12,21 @@ export class FirebaseAuth{
          const user = userCredentials.user;
          return user
        } catch (error) {
-         throw new Error("Error at: createUser "+ error.message)
+            reject(error); // Reject the promise with the error
        }
+    }
+
+    onAuthStateChanged (){
+      onAuthStateChanged(this.auth, (user) => {
+        if (user) {
+          console.log("user::from auth class" , user);
+          const uid = user.uid;
+         
+        } else {
+          
+        }
+      });
     }
 }
 
-const firebaseAuth = new FirebaseAuth()
-
-const response  = await firebaseAuth.createUser({email:"tailorsaurabh@gmail.com" , password: "password"})
-console.log(response);
+export const firebaseAuth = new FirebaseAuth()

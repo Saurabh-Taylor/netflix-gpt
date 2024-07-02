@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { validateEmailAndPassword } from "../utils/validate";
 import { auth } from "../firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth } from "../firebase/auth.firebase";
 
 const LoginForm = ({ type = "sigin" }) => {
   const [formData, setFormData] = useState({
@@ -18,30 +19,26 @@ const LoginForm = ({ type = "sigin" }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleAuth = (e) => {
+  const handleAuth = async(e) => {
     e.preventDefault();
 
     try {
       const validationResult = validateEmailAndPassword(formData);
-      if (!validationResult.valid) setErrors(validationResult.errors);
-      else setErrors(null);
+      if (!validationResult.valid) {
+        setErrors(validationResult.errors);
+        return
+      }else{
+        setErrors("")
+      }
 
       if (type === "signup") {
         //signup
-        createUserWithEmailAndPassword(auth, formData.email, formData.password)
-          .then((userCredential) => {
-            // Signed up
-            const user = userCredential.user;
-            console.log(user);
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setErrors(errorCode +"-"+ errorMessage)
-            
-          });
+          const user  = await firebaseAuth.createUser({email:formData.email , password:formData.password})
+          console.log("user::", user);
+         
       } else {
         //signin
+
       }
     } catch (error) {
       setErrors(error.message);
