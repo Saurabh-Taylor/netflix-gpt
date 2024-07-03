@@ -3,7 +3,7 @@ import React from 'react'
 import Header from '../components/Header'
 import AuthForm from '../components/AuthForm'
 
-const Login = () => {
+const Signup = () => {
   return (
     <div className='' >
         <Header/>
@@ -12,4 +12,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Signup

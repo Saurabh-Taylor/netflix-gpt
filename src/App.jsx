@@ -1,21 +1,15 @@
-import { Provider } from "react-redux"
-import Body from "./components/Body"
-import store from "./store/store"
-import { useEffect } from "react"
-import { firebaseAuth } from "./firebase/auth.firebase"
-
-
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebase";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
 
-  useEffect(()=>{
-    firebaseAuth.onAuthStateChanged()
-  },[])
+
 
   return (
-    <Provider store={store} >
-      <Body/>
-    </Provider>
+      <></>
   )
 }
 

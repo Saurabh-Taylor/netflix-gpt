@@ -1,12 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmailAndPassword } from "../utils/validate";
 import { auth } from "../firebase/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../firebase/auth.firebase";
+import { useDispatch } from "react-redux";
+import { addUser, initialState, removeUser } from "../store/features/userSlice";
 
-const LoginForm = ({ type = "sigin" }) => {
+
+
+const LoginForm = ({ type = "signin" }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,13 +19,15 @@ const LoginForm = ({ type = "sigin" }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
 
+  const dispatch = useDispatch()
+
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleAuth = async(e) => {
     e.preventDefault();
-
     try {
       const validationResult = validateEmailAndPassword(formData);
       if (!validationResult.valid) {
@@ -30,20 +36,22 @@ const LoginForm = ({ type = "sigin" }) => {
       }else{
         setErrors("")
       }
-
       if (type === "signup") {
         //signup
-          const user  = await firebaseAuth.createUser({email:formData.email , password:formData.password})
-          console.log("user::", user);
-         
-      } else {
+          const user  = await firebaseAuth.createUser({email:formData.email , password:formData.password , displayName:formData.username})
+          dispatch(addUser({uid:user.uid , email:user.email , displayName:user.displayName}))
+      }else if(type === "signin") {
         //signin
+        const user = await firebaseAuth.signInUser({email:formData.email , password:formData.password})
+        console.log("user sigin::" + user);
 
       }
     } catch (error) {
       setErrors(error.message);
     }
   };
+
+
 
   return (
     <div className="relative flex justify-center items-center min-h-screen">
