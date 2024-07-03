@@ -19,7 +19,7 @@ const Header = () => {
 
   useEffect(()=>{
     console.log("log from Header.jsx");
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubcribed = onAuthStateChanged(auth, (user) => {
       
         if (user) {
           const {uid , email , displayName} = user
@@ -27,11 +27,11 @@ const Header = () => {
           navigate("/browse")
         }else{
           dispatch(removeUser())
-          // navigate("/")
+          navigate("/")
         }
     });
 
-    return () => unsubscribe();
+    return ()=> unsubcribed()
     
   },[])
 
