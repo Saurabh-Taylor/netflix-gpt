@@ -2,9 +2,8 @@
 - vite
 - configured Tailwind css
 - Routing of App 
-- Login Form
-- Signup Form
-- Form Validation
+- Login Form/Signup Form
+
 
 # Tech Stack
 - React + Vite
@@ -14,6 +13,7 @@
 - Firebase
 - Deploying (Firebase)
 - Redux-Toolkit
+- Data coming from TMDB Api
 
 # Features
 

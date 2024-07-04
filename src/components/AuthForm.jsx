@@ -43,7 +43,6 @@ const LoginForm = ({ type = "signin" }) => {
       }else if(type === "signin") {
         //signin
         const user = await firebaseAuth.signInUser({email:formData.email , password:formData.password})
-        console.log("user sigin::" + user);
 
       }
     } catch (error) {
