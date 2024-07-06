@@ -31,7 +31,6 @@ export class FirebaseAuth{
     async signOutUser(){
       try {
         const user = await signOut(this.auth)
-        console.log(user);
       } catch (error) {
         console.log("user::from signout class" , error.message);
       }
@@ -40,9 +39,7 @@ export class FirebaseAuth{
     async signInUser({email , password}){
       try {
         const userCredentials = await signInWithEmailAndPassword(this.auth, email, password)
-        console.log("user userCredentials from sign in class::"+userCredentials);
         const user = userCredentials.user;
-        console.log("user logged in from sign in class::" , user);
       } catch (error) {
         console.log("user::from signin class" , error.message);
       }

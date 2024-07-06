@@ -8,6 +8,8 @@ import { firebaseAuth } from "../firebase/auth.firebase";
 import { useDispatch } from "react-redux";
 import { addUser, initialState, removeUser } from "../store/features/userSlice";
 
+import Image from '../components/bgImage'
+
 
 
 const LoginForm = ({ type = "signin" }) => {
@@ -54,10 +56,7 @@ const LoginForm = ({ type = "signin" }) => {
 
   return (
     <div className="relative flex justify-center items-center min-h-screen">
-      <div
-        className="absolute inset-0 z-[-1] bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg.jpg')" }}
-      ></div>
+     <Image/>
       <div className="w-full max-w-md p-8 space-y-8 bg-black bg-opacity-75 rounded-lg shadow-md z-10">
         <h2 className="text-3xl font-extrabold text-center text-white">
           {" "}
