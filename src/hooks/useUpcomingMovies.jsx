@@ -14,7 +14,6 @@ const useUpcomingMovies = () => {
             const response = await  fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', options)
             const data = await response.json()
             dispatch(addUpcomingMovies(data.results))
-            console.log(data.results);
         }catch (error) {
             throw new Error("error fetching api NOW PLAYING ::" , error.message)
         } 
