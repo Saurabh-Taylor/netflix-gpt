@@ -42,6 +42,9 @@ export class FirebaseAuth{
         const user = userCredentials.user;
       } catch (error) {
         console.log("user::from signin class" , error.message);
+        throw error
+        return error
+        
       }
        
     }

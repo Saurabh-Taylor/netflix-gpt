@@ -18,6 +18,7 @@ const LoginForm = ({ type = "signin" }) => {
     password: "",
     username: "",
   });
+  
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState(null);
 
@@ -44,8 +45,7 @@ const LoginForm = ({ type = "signin" }) => {
           dispatch(addUser({uid:user.uid , email:user.email , displayName:user.displayName}))
       }else if(type === "signin") {
         //signin
-        const user = await firebaseAuth.signInUser({email:formData.email , password:formData.password})
-
+        const Signerror = await firebaseAuth.signInUser({email:formData.email , password:formData.password})
       }
     } catch (error) {
       setErrors(error.message);
@@ -55,40 +55,31 @@ const LoginForm = ({ type = "signin" }) => {
 
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen">
-     <Image/>
-      <div className="w-full max-w-md p-8 space-y-8 bg-black bg-opacity-75 rounded-lg shadow-md z-10">
-        <h2 className="text-3xl font-extrabold text-center text-white">
-          {" "}
-          {type == "signin" ? "Sign In " : "Sign Up"}{" "}
+    <div className="relative flex justify-center items-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/bg.jpg')" }}>
+      <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg p-6 sm:p-8 space-y-8 bg-black bg-opacity-75 rounded-lg shadow-md z-10">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-center text-white">
+          {type === "signin" ? "Sign In" : "Sign Up"}
         </h2>
         <form className="mt-8 space-y-6" action="#" method="POST">
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
-            {type == "signin" ? null : (
+            {type === "signin" ? null : (
               <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Username
-                </label>
+                <label htmlFor="username" className="sr-only">Username</label>
                 <input
-                  id="Username"
+                  id="username"
                   value={formData.username}
-                  onChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                   name="username"
                   type="text"
                   required
                   className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
-                  placeholder="UserName"
+                  placeholder="Username"
                 />
               </div>
             )}
-
             <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
+              <label htmlFor="email-address" className="sr-only">Email address</label>
               <input
                 id="email-address"
                 name="email"
@@ -96,29 +87,22 @@ const LoginForm = ({ type = "signin" }) => {
                 autoComplete="email"
                 required
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4  "
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
                 placeholder="Email address"
               />
             </div>
-
             <div className="relative">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+              <label htmlFor="password" className="sr-only">Password</label>
               <input
                 id="password"
                 name="password"
                 value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-b-md focus:outline-none focus:ring-red-500 focus:border-red-500  sm:text-sm"
+                className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-b-md focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
                 placeholder="Password"
               />
               <button
@@ -131,7 +115,6 @@ const LoginForm = ({ type = "signin" }) => {
             </div>
           </div>
 
-          {/* Error Handling */}
           {errors && errors.length > 0 && (
             <div className="text-red-500">{errors[0].message}</div>
           )}
@@ -144,21 +127,10 @@ const LoginForm = ({ type = "signin" }) => {
                 type="checkbox"
                 className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
               />
-              <label
-                htmlFor="remember-me"
-                className="block ml-2 text-sm text-gray-400"
-              >
-                Remember me
-              </label>
+              <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-400">Remember me</label>
             </div>
-
             <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-red-600 hover:text-red-500"
-              >
-                Forgot your password?
-              </a>
+              <a href="#" className="font-medium text-red-600 hover:text-red-500">Forgot your password?</a>
             </div>
           </div>
 
@@ -166,28 +138,20 @@ const LoginForm = ({ type = "signin" }) => {
             <button
               onClick={handleAuth}
               type="submit"
-              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md group hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              className="relative flex justify-center w-full px-4 py-2 text-sm sm:text-base font-medium text-white bg-red-600 border border-transparent rounded-md group hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
-              Sign In
+              {type === "signin" ? "Sign In" : "Sign Up"}
             </button>
           </div>
         </form>
         <div className="text-sm text-center text-gray-400">
-          {type == "signin" ? (
+          {type === "signin" ? (
             <div>
-              {" "}
-              New to Netflix?{" "}
-              <Link to="/signup" className="text-red-600 hover:text-red-500">
-                Sign up now
-              </Link>
+              New to Netflix? <Link to="/signup" className="text-red-600 hover:text-red-500">Sign up now</Link>
             </div>
           ) : (
             <div>
-              {" "}
-              Already Registered?{" "}
-              <Link to="/" className="text-red-600 hover:text-red-500">
-                Login now
-              </Link>
+              Already Registered? <Link to="/" className="text-red-600 hover:text-red-500">Login now</Link>
             </div>
           )}
         </div>

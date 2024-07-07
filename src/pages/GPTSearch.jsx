@@ -5,7 +5,7 @@ import Image from '../components/bgImage'
 
 const GPTSearch = () => {
   return (
-    <div className='relative  h-screen text-white' >
+    <div className='relative   h-screen text-white' >
        <Image/>
 
       <div className='' >

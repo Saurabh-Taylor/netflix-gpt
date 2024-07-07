@@ -15,7 +15,7 @@ const MainContainer = () => {
     const {original_title  ,  overview , id } = mainMovie
 
   return (
-    <div className=''  >
+    <div className='bg-black '  >
         <VideoTitle title={original_title} overview = {overview} />
         <VideoBackground id = {id}  />
     </div>
@@ -24,10 +24,3 @@ const MainContainer = () => {
 
 export default MainContainer
 
-/*
-{movies?.map((movie)=>{
-            const {title} = movie
-            return <div className='' > {title} </div>
-        })}
-
-*/
