@@ -89,7 +89,7 @@ const LoginForm = ({ type = "signin" }) => {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm mb-4"
-                placeholder="Email address"
+                placeholder="Email address or Test email : test@gmail.com"
               />
             </div>
             <div className="relative">
@@ -103,7 +103,7 @@ const LoginForm = ({ type = "signin" }) => {
                 autoComplete="current-password"
                 required
                 className="relative block w-full px-3 py-2 text-white placeholder-gray-500 bg-black border border-gray-300 rounded-b-md focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                placeholder="Password"
+                placeholder="Password or test password: 12345678"
               />
               <button
                 type="button"

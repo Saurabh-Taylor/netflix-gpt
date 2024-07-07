@@ -9,7 +9,7 @@ const GPTSearch = () => {
        <Image/>
 
       <div className='' >
-      <GptSearchBar/>
+        <GptSearchBar/>
       </div>
       <GptMovieSuggestion/>
     </div>
